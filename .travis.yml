@@ -1,0 +1,41 @@
+sudo: true
+language: node_js
+node_js:
+  - 10
+
+services: 
+  - docker
+
+stages:
+  - test
+  - name: deploy
+    if: branch = master 
+
+git:
+  depth: false
+
+script:
+  - npm install
+
+before_deploy:
+  - git config --local user.name "energyfuture2020"
+  - git config --local user.email "2020energyfuture2020@gmail.com"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - echo '$TRAVIS_TAG'
+  - git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  script: skip
+  user: energyfuture2020
+  tag_name: $TRAVIS_TAG
+  target_commitish: $TRAVIS_COMMIT
+  name: $TRAVIS_TAG
+  overwrite: true
+  api_key: 5199c175f6dd8c0748c1ba2ba33fff10563a4b37
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: true
+    repo: energyfuture2020/elstiaglinfront
+  
