@@ -20,8 +20,8 @@ before_deploy:
   - git config --local user.name "energyfuture2020"
   - git config --local user.email "2020energyfuture2020@gmail.com"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-  - echo '$TRAVIS_TAG'
-  - git tag $TRAVIS_TAG
+  - echo $TRAVIS_TAG
+  - git tag ${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 
 deploy:
   provider: releases
@@ -35,6 +35,5 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-    tags: true
     repo: energyfuture2020/elstiaglinfront
   
