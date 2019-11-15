@@ -16,6 +16,7 @@ git:
 
 script:
   - npm install
+  - ./node_modules/eslint/bin/eslint.js ./src
 
 before_deploy:
   - git config --local user.name "energyfuture2020"
